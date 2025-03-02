@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, sync::Mutex};
 
 use database::db::Database;
 use sqlx::SqlitePool;
@@ -51,7 +51,7 @@ pub fn run() {
                 });
                 let db = Database::new(pool);
                 db.run_migrations().await.unwrap();
-                app.manage(AppState::new(db));
+                app.manage(Mutex::new(AppState::new(db)));
             });
             Ok(())
         })
