@@ -1,5 +1,5 @@
-use std::{fs, sync::Mutex};
-
+use std::fs;
+use tokio::sync::Mutex;
 use database::db::Database;
 use sqlx::SqlitePool;
 use tauri::{async_runtime, Manager};
@@ -7,6 +7,7 @@ use tauri_plugin_fs::FsExt;
 
 mod database {
     pub mod db;
+    pub mod models;
 }
 
 mod commands {
@@ -55,6 +56,24 @@ pub fn run() {
             });
             Ok(())
         })
+            .invoke_handler(tauri::generate_handler![
+                commands::crud::insert_student,
+                commands::crud::get_students,
+                commands::crud::update_student,
+                commands::crud::delete_student,
+                commands::crud::insert_class,
+                commands::crud::get_classes,
+                commands::crud::update_class,
+                commands::crud::delete_class,
+                commands::crud::insert_assignment,
+                commands::crud::get_assignments,
+                commands::crud::update_assignment,
+                commands::crud::delete_assignment,
+                commands::crud::insert_grade,
+                commands::crud::get_grades,
+                commands::crud::update_grade,
+                commands::crud::delete_grade,
+            ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

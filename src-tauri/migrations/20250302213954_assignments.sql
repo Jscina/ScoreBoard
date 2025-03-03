@@ -5,5 +5,5 @@ CREATE TABLE assignments (
     due_date DATE,
     category TEXT CHECK (category IN ('Homework', 'Test')) NOT NULL,
     max_score INTEGER NOT NULL,
-    FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
+    FOREIGN KEY (class_id) REFERENCES classes (id) ON DELETE CASCADE
 );
